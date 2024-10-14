@@ -1,0 +1,21 @@
+import java.util.HashSet;
+import java.util.*;
+public class HashSetSubset {
+    public static void main(String[] args) {
+        ArrayList<Integer> set1 = new ArrayList<>();
+        set1.add(1);
+        set1.add(2);
+        set1.add(3);
+        set1.add(1);
+        set1.add(2);
+        HashSet<Integer> set=new HashSet<>(set1);
+        ArrayList<Integer> uniqset1=new ArrayList<>(set);
+        System.out.println("the uniqlist is: "+uniqset1);
+        
+      
+    }
+}  
+
+output:
+
+the uniqlist is: [1, 2, 3]
