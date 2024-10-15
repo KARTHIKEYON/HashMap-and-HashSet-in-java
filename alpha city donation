@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+public class AlphaCityDonations {
+
+    public static void main(String[] args) {
+        // Create a scanner object to read input
+        Scanner scanner = new Scanner(System.in);
+
+        // Read the number of houses
+        int N = scanner.nextInt();
+        
+        // Read the donation amounts for each house
+        int[] donations = new int[N];
+        for (int i = 0; i < N; i++) {
+            donations[i] = scanner.nextInt();
+        }
+        
+        // Call the function to calculate maximum total donation
+        System.out.println(maxDonations(N, donations));
+    }
+
+    public static int maxDonations(int N, int[] donations) {
+        int maxTotal = 0;
+
+        // Iterate over each house as the starting point
+        for (int i = 0; i < N; i++) {
+            int minDonation = donations[i];
+            
+            // Consider each continuous block starting from house i
+            for (int j = i; j < N; j++) {
+                // Update the minimum donation for this block
+                minDonation = Math.min(minDonation, donations[j]);
+                // Calculate the total donation for this block
+                int totalDonation = minDonation * (j - i + 1);
+                // Update the maximum total donation
+                maxTotal = Math.max(maxTotal, totalDonation);
+            }
+        }
+        return maxTotal;
+    }
+}
+
+
+output:
+5
+2 4 3 2 1
+8
