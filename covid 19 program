@@ -1,0 +1,69 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class CovidTestingCenter {
+
+    // Function to check if we can place K rooms with at least 'mid' distance
+    public static boolean canPlaceRooms(int[] rooms, int N, int K, int mid) {
+        int count = 1;  // Start by placing the first room
+        int lastPlaced = rooms[0];  // Place the first room at rooms[0]
+
+        // Try to place the rest of the rooms
+        for (int i = 1; i < N; i++) {
+            if (rooms[i] - lastPlaced >= mid) {
+                count++;  // Place a room
+                lastPlaced = rooms[i];  // Update the position of the last placed room
+            }
+            if (count >= K) {
+                return true;  // Successfully placed K rooms
+            }
+        }
+        return false;  // Couldn't place K rooms
+    }
+
+    // Function to find the largest minimum distance
+    public static int largestMinimumDistance(int[] rooms, int N, int K) {
+        Arrays.sort(rooms);  // Sort the room numbers
+        
+        int low = 1;  // Minimum possible distance
+        int high = rooms[N - 1] - rooms[0];  // Maximum possible distance
+        int result = 0;  // Store the result for the largest minimum distance
+
+        while (low <= high) {
+            int mid = (low + high) / 2;  // Midpoint in the current search range
+            
+            // Check if we can place K rooms with at least 'mid' distance
+            if (canPlaceRooms(rooms, N, K, mid)) {
+                result = mid;  // Update result to the current valid mid
+                low = mid + 1;  // Try for a larger distance
+            } else {
+                high = mid - 1;  // Try for a smaller distance
+            }
+        }
+        
+        return result;  // Return the largest minimum distance found
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        // Input
+        int N = sc.nextInt();  // Number of available rooms
+        int K = sc.nextInt();  // Number of rooms to be used
+        
+        int[] rooms = new int[N];
+        for (int i = 0; i < N; i++) {
+            rooms[i] = sc.nextInt();  // Room numbers
+        }
+        
+        // Output the largest minimum distance
+        System.out.println(largestMinimumDistance(rooms, N, K));
+        
+        sc.close();
+    }
+}
+
+output:
+5 3
+1 2 8 4 9
+
