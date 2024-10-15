@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class TicketEncoding {
+
+    // Method to generate the Nth ticket code
+    public static String getNthTicketCode(int N) {
+        String ticketCode = "A"; // Starting ticket code for ticket #1
+        
+        // Loop to generate the code for ticket #N
+        for (int i = 2; i <= N; i++) {
+            StringBuilder nextCode = new StringBuilder();
+            int count = 1;
+            char prevChar = ticketCode.charAt(0);
+
+            // Generate the next ticket code based on the current one
+            for (int j = 1; j < ticketCode.length(); j++) {
+                char currentChar = ticketCode.charAt(j);
+                if (currentChar == prevChar) {
+                    count++;
+                } else {
+                    nextCode.append(count).append(prevChar);
+                    count = 1;
+                    prevChar = currentChar;
+                }
+            }
+
+            // Append the last counted character and its count
+            nextCode.append(count).append(prevChar);
+            ticketCode = nextCode.toString(); // Update ticket code for the next iteration
+        }
+
+        return ticketCode;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt(); // Input N
+        System.out.println(getNthTicketCode(N)); // Print the Nth ticket code
+        sc.close();
+    }
+}
+output:
+3
+111A
