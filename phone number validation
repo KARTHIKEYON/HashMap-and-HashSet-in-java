@@ -1,0 +1,69 @@
+import java.util.*;
+
+class Main {
+    public static boolean isvalidphonenumber(String phonenumber) {
+        // Removing all spaces from the phone number
+        phonenumber = phonenumber.replaceAll("\\s+", "");
+
+        // Check if it starts with valid prefixes
+        if (!phonenumber.startsWith("+91") && !phonenumber.startsWith("0") && 
+            !phonenumber.startsWith("8") && !phonenumber.startsWith("7")) {
+            return false;
+        }
+
+        // Remove country code for +91
+        if (phonenumber.startsWith("+91")) {
+            phonenumber = phonenumber.substring(3);
+        }
+
+        // Check if the length is exactly 10 digits (after handling prefixes)
+        if (phonenumber.length() != 10) {
+            return false;
+        }
+
+        // Check if all characters are digits
+        for (int i = 0; i < phonenumber.length(); i++) {
+            if (!Character.isDigit(phonenumber.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        // Read the number of phone numbers to input
+        int numphonenumber = sc.nextInt();
+        sc.nextLine();  // Consume leftover newline
+
+        // Create a list to store the phone numbers
+        List<String> phoneNumbers = new ArrayList<>();
+
+        // Take all phone numbers as input
+        for (int i = 0; i < numphonenumber; i++) {
+            String phonenumber = sc.nextLine();
+            phoneNumbers.add(phonenumber);
+        }
+
+        // After all input is given, validate and print true/false for each
+        for (String phonenumber : phoneNumbers) {
+            if (isvalidphonenumber(phonenumber)) {
+                System.out.println("true");
+            } else {
+                System.out.println("false");
+            }
+        }
+    }
+}
+
+output:
+3
++91 9876543210
+1234567890
+8765432109
+
+true
+false
+true
