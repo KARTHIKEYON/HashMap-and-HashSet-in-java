@@ -1,0 +1,65 @@
+import java.util.Scanner;
+
+public class EmailValidator {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        // Read the number of email addresses
+        int N = sc.nextInt();
+        sc.nextLine();  // Consume the newline after the number of email ids
+
+        // Array to store all emails
+        String[] emails = new String[N];
+
+        // Read all email addresses
+        for (int i = 0; i < N; i++) {
+            emails[i] = sc.nextLine().trim();
+        }
+
+        // After collecting all email inputs, validate each and print true/false
+        for (int i = 0; i < N; i++) {
+            System.out.println(isValidEmail(emails[i]));
+        }
+    }
+
+    public static boolean isValidEmail(String email) {
+        // Trim the email and remove extra spaces
+        email = email.trim();
+        
+        // Check if the email contains exactly one '@' symbol
+        int atIndex = email.indexOf('@');
+        int lastAtIndex = email.lastIndexOf('@');
+        if (atIndex == -1 || atIndex != lastAtIndex) {
+            return false;
+        }
+
+        // Split the email into local part and domain part
+        String localPart = email.substring(0, atIndex);
+        String domainPart = email.substring(atIndex + 1);
+
+        // Validate the local part (non-empty, contains no spaces)
+        if (localPart.isEmpty() || localPart.contains(" ")) {
+            return false;
+        }
+
+        // Validate the domain part (must contain at least one '.', non-empty, no spaces)
+        int dotIndex = domainPart.lastIndexOf('.');
+        if (dotIndex == -1 || dotIndex == 0 || dotIndex == domainPart.length() - 1 || domainPart.contains(" ")) {
+            return false;
+        }
+
+        return true;
+    }
+}
+
+output:
+4
+karthi@@
+karthi_keyon@gmail.com
+karthi_keyon?@yahoo.com
+keypon.com
+false
+true
+true
+false
