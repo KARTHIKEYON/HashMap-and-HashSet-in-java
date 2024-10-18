@@ -1,0 +1,53 @@
+import java.util.*;
+class Main{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        int n=sc.nextInt();
+        int m=sc.nextInt();
+        
+        int routeA[]=new int[n];
+        for(int i=0;i<n;i++){
+            routeA[i]=sc.nextInt();
+        }
+        
+        int routeB[]=new int[m];
+        for(int i=0;i<m;i++){
+            routeB[i]=sc.nextInt();
+        }
+        
+        int x=sc.nextInt();
+        int y=sc.nextInt();
+        
+        Hashset<Integer>seta=new Hashset<>();
+        Hashset<Integer>setb=new Hashset<>();
+        
+        for(int i:routeA){
+            seta.add(i);
+        }
+        
+        for(int i:routeB){
+            setb.add(i);
+        }
+        
+        if(seta.contains(x) &&seta.contains(y)){
+            System.out.println("yes");
+        }else if(setb.contains(x) && setb.contains(y)){
+            System.out.println("yes");
+        }
+        else{
+            for(int i:seta){
+                if(setb.contains(i)){
+                    System.out.println("yes");
+                    break;
+                }
+            }
+        }
+    }
+}
+output:
+5 5
+1 2 3 4 5
+3 7 8 9 10
+1 7
+
