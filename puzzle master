@@ -1,0 +1,65 @@
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Input the number of elements in the array n and the target sum k
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+
+        // Initialize the array and input the elements
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        // Sort the array to handle duplicates and allow early pruning
+        Arrays.sort(arr);
+
+        // Initialize result to store the count of combinations
+        int count = 0;
+
+        // Use a stack to keep track of the combination being built
+        Stack<Integer> currentCombination = new Stack<>();
+
+        // Backtracking logic
+        Stack<int[]> stack = new Stack<>();
+        stack.push(new int[] { 0, k });  // {start_index, remaining_target}
+
+        while (!stack.isEmpty()) {
+            int[] state = stack.pop();
+            int start = state[0];
+            int remaining = state[1];
+
+            if (remaining == 0) {
+                // If we've hit the target, increment the count
+                count++;
+                continue;
+            }
+
+            for (int i = start; i < n; i++) {
+                // Skip duplicates
+                if (i > start && arr[i] == arr[i - 1]) {
+                    continue;
+                }
+
+                // If the current element is greater than the remaining target, stop (pruning)
+                if (arr[i] > remaining) {
+                    break;
+                }
+
+                // Push the new state (next element, updated remaining target) onto the stack
+                stack.push(new int[] { i + 1, remaining - arr[i] });
+            }
+        }
+
+        // Output the total number of valid combinations
+        System.out.println(count);
+        sc.close();
+    }
+}
+output:
+8 8
+10 1 2 7 6 1 5
